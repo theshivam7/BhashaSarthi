@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { AntDesign, Ionicons, MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import colors from '../utils/colors';
 import supportedLanguages from '../utils/supportedLanguages';
 
 export default function HomeScreen(props) {
   const params = props.route.params || {};
+
 
   const [enteredText, setEnteredText] = useState("");
   const [resultText, setResultText] = useState("");
@@ -15,21 +16,37 @@ export default function HomeScreen(props) {
   useEffect(() => {
     if (params.languageTo) {
       setLanguageTo(params.languageTo);
-    }
+  }
 
-    if (params.languageFrom) {
+  if (params.languageFrom) {
       setLanguageFrom(params.languageFrom);
-    }
-  }, [params.languageTo, params.languageFrom]);
-
-  const handleCameraPress = () => {
-    // Handle camera button press logic here
-  };
-
+  }
+}, [params.languageTo, params.languageFrom]);
+  
   return (
     <View style={styles.container}>
       <View style={styles.languageContainer}>
-        {/* ... (existing code for language selection) */}
+
+        <TouchableOpacity
+        style={styles.languageOption}>
+        <Text style={styles.languageOptionText}> English</Text>
+        </TouchableOpacity>
+
+        <View style={styles.arrowContainer}>
+          <AntDesign name="arrowright" size={24} color={colors.lightGrey} />
+        </View>
+
+        <TouchableOpacity
+        style={styles.languageOption}
+        onPress={() => props.navigation.navigate("LanguageSelect", {
+        title: "Translate to",
+        onSelectLanguage: (selectedLanguage) => setLanguageTo(selectedLanguage)
+  })}
+>
+  <Text style={styles.languageOptionText}>{supportedLanguages[languageTo]}</Text>
+</TouchableOpacity>
+
+
       </View>
 
       <View style={styles.inputContainer}>
@@ -42,8 +59,7 @@ export default function HomeScreen(props) {
 
         <TouchableOpacity
           disabled={enteredText === ''}
-          style={styles.iconContainer}
-        >
+          style={styles.iconContainer}>
           <Ionicons
             name="arrow-forward-circle-sharp"
             size={24}
@@ -52,16 +68,18 @@ export default function HomeScreen(props) {
         </TouchableOpacity>
       </View>
 
-      {/* Camera Button */}
-      <TouchableOpacity
-        style={styles.cameraButton}
-        onPress={handleCameraPress}
-      >
-        <FontAwesome5 name="camera" size={24} color={colors.primary} />
-      </TouchableOpacity>
-
       <View style={styles.resultContainer}>
-        {/* ... (existing code for result display) */}
+        <Text style={styles.resultText}>{enteredText}</Text>
+
+        <TouchableOpacity
+          disabled={resultText === ''}
+          style={styles.iconContainer}>
+          <MaterialIcons
+            name="content-copy"
+            size={24}
+            color={resultText !== '' ? colors.textColor : colors.textColorDisabled}
+          />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.historyContainer}></View>
@@ -133,14 +151,5 @@ const styles = StyleSheet.create({
     backgroundColor: colors.greyBackground,
     flex: 1,
     padding: 10
-  },
-  cameraButton: {
-    position: 'absolute',
-    bottom: 20,
-    alignSelf: 'center',
-    backgroundColor: colors.white,
-    borderRadius: 30,
-    padding: 10,
-    elevation: 5, // Add elevation for a shadow effect (Android)
-  },
+  }
 });
