@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
+import { 
+  View, 
+  Text, 
+  TextInput, 
+  TouchableOpacity, 
+  StyleSheet, 
+  Alert, 
   ActivityIndicator,
   Keyboard,
   TouchableWithoutFeedback,
@@ -15,11 +15,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import * as Clipboard from 'expo-clipboard';
-import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../utils/colors';
 import supportedLanguages from '../utils/supportedLanguages';
 import { PERPLEXITY_API_KEY } from '@env';
-
 
 const API_URL = 'https://api.perplexity.ai/chat/completions';
 
@@ -68,10 +66,11 @@ export default function HomeScreen({ navigation, route }) {
       });
       await AsyncStorage.setItem('lastTranslation', translationData);
       
+      // Save to history
       const history = await AsyncStorage.getItem('translationHistory') || '[]';
       const historyArray = JSON.parse(history);
       historyArray.unshift(JSON.parse(translationData));
-      if (historyArray.length > 50) historyArray.pop();
+      if (historyArray.length > 50) historyArray.pop(); // Keep only last 50 translations
       await AsyncStorage.setItem('translationHistory', JSON.stringify(historyArray));
     } catch (error) {
       console.error('Error saving translation:', error);
@@ -86,6 +85,7 @@ export default function HomeScreen({ navigation, route }) {
 
     setIsLoading(true);
     Keyboard.dismiss();
+
     try {
       const response = await axios.post(API_URL, {
         model: "llama-3.1-70b-instruct",
@@ -135,16 +135,11 @@ export default function HomeScreen({ navigation, route }) {
     }
   };
 
-  const handleClearInput = () => {
-    setEnteredText('');
-    setResultText('');
-  };
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.languageContainer}>
-          <TouchableOpacity
+          <TouchableOpacity 
             style={styles.languageOption}
             onPress={() => navigation.navigate('LanguageSelect', {
               title: 'Translate from',
@@ -153,9 +148,11 @@ export default function HomeScreen({ navigation, route }) {
             })}>
             <Text style={styles.languageOptionText}>{supportedLanguages[languageFrom]}</Text>
           </TouchableOpacity>
+
           <View style={styles.arrowContainer}>
-            <AntDesign name="arrowright" size={24} color={colors.primary} />
+            <AntDesign name="arrowright" size={24} color={colors.lightGrey} />
           </View>
+
           <TouchableOpacity
             style={styles.languageOption}
             onPress={() => navigation.navigate('LanguageSelect', {
@@ -169,34 +166,29 @@ export default function HomeScreen({ navigation, route }) {
 
         <View style={styles.inputContainer}>
           <TextInput
-            style={styles.textInput}
             multiline
-            placeholder="Enter text to translate"
-            value={enteredText}
+            placeholder="Enter text"
+            style={styles.textInput}
             onChangeText={setEnteredText}
+            value={enteredText}
           />
-          <TouchableOpacity style={styles.clearButton} onPress={handleClearInput}>
-            <Ionicons name="close-circle" size={24} color={colors.primary} />
-          </TouchableOpacity>
-        </View>
 
-        <LinearGradient
-          colors={[colors.gradientStart, colors.gradientEnd]}
-          style={styles.translateButton}
-        >
-          <TouchableOpacity onPress={handleTranslate} disabled={isLoading}>
+          <TouchableOpacity
+            onPress={handleTranslate}
+            disabled={isLoading}
+            style={styles.translateButton}>
             {isLoading ? (
               <ActivityIndicator size="small" color={colors.white} />
             ) : (
               <Text style={styles.translateButtonText}>Translate</Text>
             )}
           </TouchableOpacity>
-        </LinearGradient>
+        </View>
 
         <View style={styles.resultContainer}>
           <Text style={styles.resultText}>{resultText}</Text>
           {resultText !== '' && (
-            <TouchableOpacity style={styles.copyButton} onPress={handleCopyResult}>
+            <TouchableOpacity onPress={handleCopyResult} style={styles.copyButton}>
               <MaterialIcons name="content-copy" size={24} color={colors.primary} />
             </TouchableOpacity>
           )}
@@ -237,7 +229,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 20,
-    position: 'relative',
   },
   textInput: {
     fontFamily: 'Roboto-Regular',
@@ -251,16 +242,11 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
   },
-  clearButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-  },
   translateButton: {
+    backgroundColor: colors.primary,
     paddingVertical: 12,
     borderRadius: 10,
     alignItems: 'center',
-    marginBottom: 20,
   },
   translateButtonText: {
     color: colors.white,
