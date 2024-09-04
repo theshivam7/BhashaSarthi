@@ -1,4 +1,4 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# Learn more at https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
 # dependencies
 node_modules/
@@ -19,7 +19,7 @@ web-build/
 # Metro
 .metro-health-check*
 
-# debug
+# debug files
 npm-debug.*
 yarn-debug.*
 yarn-error.*
@@ -30,7 +30,12 @@ yarn-error.*
 
 # local env files
 .env*.local
-
-# typescript
-*.tsbuildinfo
 .env
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional - Lockfiles (if using npm or yarn, but not both)
+# Remove one of these if you are using only one package manager
+package-lock.json
+yarn.lock
