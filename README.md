@@ -53,10 +53,11 @@ Before running the app, you will need to set up an API key for the translation s
 6. **Using Expo**:
    - For iOS: Press `i` in the terminal to open in iOS simulator.
    - For Android: Press `a` in the terminal to open in Android emulator.
-   - For web: Press `w` to launch the app in a browser.
+ 
+- If you don't have Android Studio or Xcode, you can use the Expo Go app:
+     - Download the [Expo Go app for iOS](https://apps.apple.com/in/app/expo-go/id982107779) or the [Expo Go app for Android](https://play.google.com/store/apps/details?id=host.exp.exponent&pcampaignid=web_share) from the respective app stores.
+     - Open the Expo Go app and scan the QR code displayed in the terminal after running `npm start` to launch the app on your device.
 
-### Environment Variables
-Ensure that your `.env` file is included in the `.gitignore` to avoid exposing your API key publicly.
 
 ## About the Developer
 I'm [**Shivam Sharma**](https://www.linkedin.com/in/theshivam7/), an undergrad at IIT Madras. I develop websites and apps for Android and iOS, and I'm passionate about AI and ML.
