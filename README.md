@@ -6,7 +6,7 @@
 
 **Open-source App that provides fast and accurate translations.**
 
-[Get Started](#getting-started) | [Examples](examples) |
+[Get Started](#getting-started) 
 </div>
 
 ## Overview
@@ -70,8 +70,5 @@ If you have any questions, feel free to reach out on LinkedIn or check out my Gi
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat-square&logo=github&logoColor=white)](https://www.github.com/theshivam7/)
 
 ---
-
-**Crafted with care by Shivam Sharma**
-
 
 **Made by Shivam Sharma**
