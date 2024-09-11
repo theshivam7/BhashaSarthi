@@ -12,7 +12,7 @@ To run this app locally:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/theshivam7/BhashaSarthi-app.git
+    git clone https://github.com/theshivam7/BhashaSarthi.git
     ```
 2. Install dependencies:
     ```bash
