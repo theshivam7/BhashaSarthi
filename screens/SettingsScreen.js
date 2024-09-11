@@ -19,8 +19,15 @@ export default function SettingsScreen({ navigation }) {
             { 
               text: "OK", 
               onPress: async () => {
-                await AsyncStorage.removeItem('translationHistory');
-                Alert.alert("Success", "Translation history cleared.");
+                try {
+                  await AsyncStorage.removeItem('translationHistory');
+                  Alert.alert("Success", "Translation history cleared.");
+                  // Notify SavedScreen to refresh its data
+                  navigation.navigate('Saved', { refresh: true });
+                } catch (error) {
+                  console.error('Error clearing history:', error);
+                  Alert.alert("Error", "Failed to clear translation history.");
+                }
               }
             }
           ]
@@ -32,8 +39,7 @@ export default function SettingsScreen({ navigation }) {
       case 'About Us':
         Alert.alert(
           "About BhashaSarthi",
-         "BhashaSarthi is a React Native Expo app created for translating Indian languages. It's available on Android, iOS, and the web.\n\nAbout the Developer:\nI'm Shivam Sharma, an undergrad at IIT Madras. I develop websites and apps for Android and iOS, and I'm passionate about AI and ML.\n\nContact Me:\nIf you have any questions, feel free to reach out on LinkedIn or check out my GitHub for interesting projects.\n\n\"This is my first app, made in 9 months! 😂 It took so long because of many errors that made me want to give up, but I kept going and finally finished!\""
-
+          "BhashaSarthi is a React Native Expo app created for translating Indian languages. It's available on Android, iOS, and the web.\n\nAbout the Developer:\nI'm Shivam Sharma, an undergrad at IIT Madras. I develop websites and apps for Android and iOS, and I'm passionate about AI and ML.\n\nContact Me:\nIf you have any questions, feel free to reach out on LinkedIn or check out my GitHub for interesting projects.\n\n\"This is my first app, made in 9 months! 😊 It took so long because of many challenges that made me want to give up, but I persevered and finally finished!\"",
           [
             {
               text: "LinkedIn",
@@ -67,11 +73,11 @@ export default function SettingsScreen({ navigation }) {
   };
 
   const settingsOptions = [
-    'Clear History',
-    'Feedback',
-    'About Us',
-    'Terms and Conditions',
-    'Privacy Policy'
+    { title: 'Clear History', icon: 'delete' },
+    { title: 'Feedback', icon: 'feedback' },
+    { title: 'About Us', icon: 'info' },
+    { title: 'Terms and Conditions', icon: 'description' },
+    { title: 'Privacy Policy', icon: 'security' }
   ];
 
   return (
@@ -80,10 +86,13 @@ export default function SettingsScreen({ navigation }) {
         <TouchableOpacity
           key={index}
           style={styles.optionContainer}
-          onPress={() => handleOptionPress(option)}
+          onPress={() => handleOptionPress(option.title)}
           activeOpacity={0.7}
         >
-          <Text style={styles.optionText}>{option}</Text>
+          <View style={styles.optionContent}>
+            <MaterialIcons name={option.icon} size={24} color={colors.primary} style={styles.optionIcon} />
+            <Text style={styles.optionText}>{option.title}</Text>
+          </View>
           <MaterialIcons name="chevron-right" size={24} color={colors.primary} />
         </TouchableOpacity>
       ))}
@@ -97,7 +106,6 @@ export default function SettingsScreen({ navigation }) {
             Shivam 🍁
           </Text>
         </Text>
-        
       </View>
     </ScrollView>
   );
@@ -106,27 +114,43 @@ export default function SettingsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
   },
   optionContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: colors.lightGrey,
-    paddingVertical: 20,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginHorizontal: 15,
+    marginVertical: 8,
+    paddingVertical: 15,
     paddingHorizontal: 20,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+  },
+  optionContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  optionIcon: {
+    marginRight: 15,
   },
   optionText: {
-    fontSize: 18,
+    fontSize: 16,
     color: colors.textColor,
+    fontWeight: '500',
   },
   footerContainer: {
     padding: 20,
     alignItems: 'center',
+    marginTop: 10,
   },
   footerText: {
-    fontSize: 16,
+    fontSize: 14,
     color: colors.textColor,
     textAlign: 'center',
   },
@@ -134,14 +158,5 @@ const styles = StyleSheet.create({
     color: colors.primary,
     textDecorationLine: 'underline',
     fontWeight: 'bold',
-  },
-  contactContainer: {
-    marginTop: 10,
-  },
-  contactLink: {
-    fontSize: 16,
-    color: colors.primary,
-    textDecorationLine: 'underline',
-    marginTop: 5,
   },
 });
