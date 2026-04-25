@@ -1,29 +1,68 @@
 {
   "expo": {
-    "name": "BhashaSarthi2",
-    "slug": "BhashaSarthi2",
-    "version": "1.0.0",
+    "name": "BhashaSarthi",
+    "slug": "BhashaSarthi",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#09090B"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.theshivam7.BhashaSarthi",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "BhashaSarthi uses the microphone to record voice input for translation.",
+        "NSSpeechRecognitionUsageDescription": "BhashaSarthi uses speech recognition to transcribe your voice for translation.",
+        "NSUserTrackingUsageDescription": "This app does not track you.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "privacyManifests": {
+        "NSPrivacyAccessedAPITypes": [
+          {
+            "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults",
+            "NSPrivacyAccessedAPITypeReasons": [
+              "CA92.1"
+            ]
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#09090B"
       },
-      "edgeToEdgeEnabled": true
+      "package": "com.theshivam7.BhashaSarthi",
+      "versionCode": 1,
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-font",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "BhashaSarthi uses the microphone to record voice input for translation."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2277d0c5-9bc7-4147-922f-cc7439145027"
+      }
+    },
+    "owner": "theshivam7"
   }
 }
